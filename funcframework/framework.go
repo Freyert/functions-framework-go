@@ -109,7 +109,7 @@ func RegisterCloudEventFunctionContext(ctx context.Context, path string, fn func
 }
 
 // Start serves an HTTP server with registered function(s).
-func Start(port string) error {
+func Start(address string) error {
 	// If FUNCTION_TARGET, try to start with that registered function
 	// If not set, assume non-declarative functions.
 	target := os.Getenv("FUNCTION_TARGET")
@@ -137,7 +137,7 @@ func Start(port string) error {
 		}
 	}
 
-	return http.ListenAndServe(":"+port, handler)
+	return http.ListenAndServe(address, handler)
 }
 
 func wrapHTTPFunction(path string, fn func(http.ResponseWriter, *http.Request)) (http.Handler, error) {
